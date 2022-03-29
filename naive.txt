@@ -1,0 +1,23 @@
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn import preprocessing,datasets,neighbors
+from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
+from sklearn.naive_bayes import GaussianNB,BernoulliNB,CategoricalNB
+
+iris=load_iris()
+X_train,X_test,y_train,y_test=train_test_split(X,y,stratify=y,random_state=0,train_size=0.7)
+scaler=preprocessing.StandardScaler().fit(X_train)
+X_train=scaler.transform(X_train)
+X_test=scaler.transform(X_test)
+
+scores=[]
+classifier=GaussianNB()
+classifier.fit(X_train,y_train)
+y_pred=classifier.predict(X_test)
+scores.append(accuracy_score(y_test,y_pred))
+cm=confusion_matrix(y_test,y_pred)
+print(cm)
+
+classifier=BernoulliNB()
+cm=confusion_matrix(y_test,y_pred)
+print(cm)
